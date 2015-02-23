@@ -1,29 +1,35 @@
-# Nyudl::Mdi::Message
+Nyudl::Mdi::Message
+===================
 
-TODO: Write a gem description
+## Overview
+Message class(es) for NYU DL Message Driven Infrastructure
 
-## Installation
+## Status
+in development
 
-Add this line to your application's Gemfile:
+## Messages
+All MDI messages are serialized using JSON.
+There are a standard set of key-value pairs expected in all request and response messages.
+Service-specific key-value pairs are specified using the `params` key.
 
-    gem 'nyudl-mdi-message'
+#### Request Messages
 
-And then execute:
+##### keys:
+`version`      the message format version
+`request_id`   a UUID
+`requestor_id` the identifier of the agent invoking the service
+`object_id`    the identifier of the object being processed by the service
+`params`       a hash containing service-specific key/value pairs
 
-    $ bundle
+#### Response Messages
 
-Or install it yourself as:
-
-    $ gem install nyudl-mdi-message
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( http://github.com/<my-github-username>/nyudl-mdi-message/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+##### keys:
+`version`      the message format version
+`request_id`   a UUID
+`requestor_id` the identifier of the agent invoking the service
+`object_id`    the identifier of the object being processed by the service
+`outcome`      `success` or `error`
+`start_time`   operation execution start  timestamp (ISO-8601 UTC)
+`end_time`     operation execution finish timestamp (ISO-8601 UTC)
+`agent`        a hash with keys `name`, `version`,`host`
+`data`         an optional key for returning data from the service
