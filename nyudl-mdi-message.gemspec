@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Nyudl::Mdi::Message::VERSION
   spec.authors       = ["jgpawletko"]
   spec.email         = ["jgpawletko@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Message classes for NYU DL Message Driven Infrastructure}
+  spec.description   = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end
