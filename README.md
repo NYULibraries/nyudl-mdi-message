@@ -1,15 +1,17 @@
-Nyudl::Mdi::Message
+NYUDL::MDI::Message
 ===================
 
 ## Overview
-Message class(es) for a Message Driven Infrastructure
+Message class for New York University Digital Library's Message Driven
+Infrastructure
 
 ## Status
 in development
 
 ## Messages
 All MDI messages are serialized using JSON.
-There are a standard set of key-value pairs expected in all request and response messages.
+There are a standard set of key-value pairs expected in all request
+and response messages.
 Service-specific key-value pairs are specified using the `params` key.
 
 #### Request Messages
