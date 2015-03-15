@@ -5,7 +5,7 @@ require 'nyudl/mdi/message/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "nyudl-mdi-message"
-  spec.version       = Nyudl::Mdi::Message::VERSION
+  spec.version       = NYUDL::MDI::Message::VERSION
   spec.authors       = ["jgpawletko"]
   spec.email         = ["jgpawletko@gmail.com"]
   spec.summary       = %q{Message classes for NYU DL Message Driven Infrastructure}
