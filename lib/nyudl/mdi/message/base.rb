@@ -1,5 +1,7 @@
 module NYUDL::MDI::Message
   class Base
-    extend Forwardable
+    def to_json
+      "{}"
+    end
   end
 end
