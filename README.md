@@ -20,8 +20,6 @@ Service-specific key-value pairs are specified using the `params` key.
 |--------------|--------------------------------------------------------------|
 |`version`     | the message format version                                   |
 |`request_id`  | a UUID                                                       |
-|`requestor_id`| the identifier of the agent invoking the service             |
-|`object_id`   | the identifier of the object being processed by the service  |
 |`params`      | a hash containing service-specific key/value pairs           |
 
 #### Response Messages
@@ -30,8 +28,7 @@ Service-specific key-value pairs are specified using the `params` key.
 |--------------|--------------------------------------------------------------|
 |`version`     | the message format version                                   |
 |`request_id`  | a UUID                                                       |
-|`requestor_id`| the identifier of the agent invoking the service             |
-|`object_id`   | the identifier of the object being processed by the service  |
+|`params`      | echo of request params                                       |
 |`outcome`     | `success` or `error`                                         |
 |`start_time`  | operation execution start  timestamp (ISO-8601 UTC)          |
 |`end_time`    | operation execution finish timestamp (ISO-8601 UTC)          |
