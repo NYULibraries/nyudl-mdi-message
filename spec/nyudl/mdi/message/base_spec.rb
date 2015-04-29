@@ -19,5 +19,13 @@ module NYUDL::MDI::Message
         expect(version).to be == '0.1.0'
       end
     end
+    describe '#request_id' do
+      let(:request_id) { NYUDL::MDI::Message::Base.new.request_id }
+      it 'should return an id of the correct form' do
+        pattern = '[a-z\d]{8}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{12}'
+        regexp  = /\A#{pattern}\z/
+        expect(request_id).to match(regexp)
+      end
+    end
   end
 end
