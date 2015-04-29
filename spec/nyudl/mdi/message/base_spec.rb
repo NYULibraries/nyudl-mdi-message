@@ -13,5 +13,11 @@ module NYUDL::MDI::Message
         expect{ MultiJson.load(json) }.to_not raise_error
       end
     end
+    describe '#version' do
+      let(:version) { NYUDL::MDI::Message::Base.new.version }
+      it 'should return the correct version' do
+        expect(version).to be == '0.1.0'
+      end
+    end
   end
 end
