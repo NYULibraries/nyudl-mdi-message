@@ -1,2 +1,3 @@
 require "nyudl/mdi/message/version"
 require "nyudl/mdi/message/base"
+require "nyudl/mdi/message/request"
