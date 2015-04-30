@@ -88,22 +88,22 @@ module NYUDL::MDI::Message
         end
       end
 
-      # context "when assigned a valid outcome" do
-      #   it "returns the assigned outcome" do
-      #     response.outcome = 'success'
-      #     expect(response.outcome).to be == 'success'
-      #   end
-      # end
+      context "when assigned a valid outcome" do
+        it "returns the assigned outcome" do
+          response.outcome = 'success'
+          expect(response.outcome).to be == 'success'
+        end
+      end
     end
 
 
-    # describe "#outcome=" do
-    #   context "when assigned an invalid outcome" do
-    #     it "raises an ArgumentError" do
-    #       expect { response.outcome = 'foo' }.to raise_error(ArgumentError)
-    #     end
-    #   end
-    # end
+    describe "#outcome=" do
+      context "when assigned an invalid outcome" do
+        it "raises an ArgumentError" do
+          expect { response.outcome = 'foo' }.to raise_error(ArgumentError)
+        end
+      end
+    end
 
   end
 end
