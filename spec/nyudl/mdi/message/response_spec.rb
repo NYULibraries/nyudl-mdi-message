@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'time'
 
 module NYUDL::MDI::Message
   describe Response do
@@ -14,7 +15,13 @@ module NYUDL::MDI::Message
           expect(response.start_time).to be_nil
         end
       end
-      pending "when assigned a valid time"
+      context "when assigned a valid time" do
+        it "returns the assigned time" do
+          time = Time.now.utc.iso8601
+          response.start_time = time
+          expect(response.start_time).to be == "#{time}"
+        end
+      end
       pending "when assigned an invalid time"
       pending "when assigned a non-UTC time"
     end

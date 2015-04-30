@@ -3,5 +3,8 @@ module NYUDL::MDI::Message
     def start_time
       h[:start_time]
     end
+    def start_time=(value)
+      h[:start_time] = value
+    end
   end
 end
