@@ -13,7 +13,7 @@ module NYUDL::MDI::Message
         expect{ MultiJson.load(json) }.to_not raise_error
       end
       it 'should return the expected keys' do
-        keys = %w(version request_id).sort
+        keys = %w(version request_id params).sort
         expect(MultiJson.load(json).keys.sort).to be == keys
       end
     end
@@ -29,6 +29,12 @@ module NYUDL::MDI::Message
         pattern = '[a-z\d]{8}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{4}-[a-z\d]{12}'
         regexp  = /\A#{pattern}\z/
         expect(request_id).to match(regexp)
+      end
+    end
+    describe '#params' do
+      let(:empty) { NYUDL::MDI::Message::Base.new.params }
+      it 'should return an empty hash if no params provided in constructor' do
+        expect(empty).to be == {}
       end
     end
   end
