@@ -8,10 +8,7 @@ module NYUDL::MDI::Message
     end
 
     def start_time=(value)
-      unless(Timeliness.parse(value, format: 'yyyy-mm-ddThh:nn:ssZ'))
-        raise ArgumentError, "non-UTC ISO-8601 time detected: #{value}"
-      end
-
+      assert_iso8601_utc!(value)
       h[:start_time] = value
     end
 
@@ -21,12 +18,18 @@ module NYUDL::MDI::Message
     end
 
     def end_time=(value)
+      assert_iso8601_utc!(value)
+      h[:end_time] = value
+    end
 
+
+    private
+
+    def assert_iso8601_utc!(value)
       unless(Timeliness.parse(value, format: 'yyyy-mm-ddThh:nn:ssZ'))
         raise ArgumentError, "non-UTC ISO-8601 time detected: #{value}"
       end
-
-      h[:end_time] = value
     end
+
   end
 end
