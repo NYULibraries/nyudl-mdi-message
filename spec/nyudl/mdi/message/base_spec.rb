@@ -12,6 +12,10 @@ module NYUDL::MDI::Message
       it 'should return valid JSON' do
         expect{ MultiJson.load(json) }.to_not raise_error
       end
+      it 'should return the expected keys' do
+        keys = %w(version request_id).sort
+        expect(MultiJson.load(json).keys.sort).to be == keys
+      end
     end
     describe '#version' do
       let(:version) { NYUDL::MDI::Message::Base.new.version }
