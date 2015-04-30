@@ -32,9 +32,18 @@ module NYUDL::MDI::Message
       end
     end
     describe '#params' do
-      let(:empty) { NYUDL::MDI::Message::Base.new.params }
-      it 'should return an empty hash if no params provided in constructor' do
-        expect(empty).to be == {}
+      context 'when no params hash provided to constructor' do
+        let(:empty) { NYUDL::MDI::Message::Base.new.params }
+        it 'should return an empty hash' do
+          expect(empty).to be == {}
+        end
+      end
+      context 'when a params hash provided to constructor' do
+        test_params = {a: 'a', b: 'b'}
+        let(:populated) { NYUDL::MDI::Message::Base.new(test_params).params }
+        it 'should return the provided params hash' do
+          expect(populated).to be == test_params
+        end
       end
     end
   end
