@@ -22,6 +22,10 @@ module NYUDL::MDI::Message
       h[:end_time] = value
     end
 
+    def outcome
+      h[:outcome]
+    end
+
 
     private
 

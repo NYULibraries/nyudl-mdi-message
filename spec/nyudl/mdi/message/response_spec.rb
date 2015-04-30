@@ -73,11 +73,37 @@ module NYUDL::MDI::Message
       context "when assigned a non-UTC time" do
         it "raises an ArgumentError" do
           time = Time.now.asctime
-          expect { response.end_time = time }.to raise_error(ArgumentError)
+          expect { response.end_time  = time }.to raise_error(ArgumentError)
         end
       end
     end
 
+
+#------------------------------------------------------------------------------
+
+    describe "#outcome" do
+      context "when not assigned a value" do
+        it "returns nil" do
+          expect(response.outcome).to be_nil
+        end
+      end
+
+      # context "when assigned a valid outcome" do
+      #   it "returns the assigned outcome" do
+      #     response.outcome = 'success'
+      #     expect(response.outcome).to be == 'success'
+      #   end
+      # end
+    end
+
+
+    # describe "#outcome=" do
+    #   context "when assigned an invalid outcome" do
+    #     it "raises an ArgumentError" do
+    #       expect { response.outcome = 'foo' }.to raise_error(ArgumentError)
+    #     end
+    #   end
+    # end
 
   end
 end
