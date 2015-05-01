@@ -51,6 +51,7 @@ module NYUDL::MDI::Message
       end
     end
 
+
     def assert_valid_outcome!(outcome)
       valid_outcomes = %w(success error)
       unless valid_outcomes.include?(outcome)
@@ -58,12 +59,12 @@ module NYUDL::MDI::Message
       end
     end
 
-    def assert_valid_agent!(agent)
 
+    def assert_valid_agent!(agent)
       raise ArgumentError, "agent must be a Hash" unless agent.is_a?(Hash)
 
-      required_keys = [ :name, :version , :host ].sort
-      unless agent.keys.sort == required_keys
+      required_keys = [ :name, :version , :host ]
+      unless agent.keys.sort == required_keys.sort
         raise ArgumentError, "invalid keys: #{agent.keys}"
       end
 
