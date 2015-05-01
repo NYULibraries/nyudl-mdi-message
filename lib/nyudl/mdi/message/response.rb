@@ -43,6 +43,16 @@ module NYUDL::MDI::Message
     end
 
 
+    def data
+      h[:data]
+    end
+
+    def data=(value)
+      h[:data] = value
+    end
+
+
+
     private
 
     def assert_iso8601_utc!(time)

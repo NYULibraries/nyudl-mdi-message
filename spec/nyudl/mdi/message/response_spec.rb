@@ -144,5 +144,23 @@ module NYUDL::MDI::Message
       end
     end
 
+
+    describe "#data" do
+      context "when not assigned a value" do
+        it "returns nil" do
+          expect(response.data).to be_nil
+        end
+      end
+    end
+
+    describe "#data=" do
+      context "when assigned a valid data" do
+        it "returns the assigned data" do
+          data = "this is some awesome data!"
+          response.data = data
+          expect(response.data).to be == data
+        end
+      end
+    end
   end
 end
