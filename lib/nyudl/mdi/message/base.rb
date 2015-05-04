@@ -1,8 +1,11 @@
 require 'securerandom'
 require 'multi_json'
+require 'validatable'
 
 module NYUDL::MDI::Message
   class Base
+    include Validatable
+
     def initialize(params = {})
       h[:version]    = MESSAGE_STRUCTURE_VERSION
       h[:request_id] = SecureRandom.uuid

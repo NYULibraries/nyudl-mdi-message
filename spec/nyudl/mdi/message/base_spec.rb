@@ -46,5 +46,17 @@ module NYUDL::MDI::Message
         end
       end
     end
+    describe '#valid?' do
+      let(:result) { NYUDL::MDI::Message::Base.new.valid? }
+      it 'should be true' do
+        expect(result).to be == true
+      end
+    end
+    describe '#errors' do
+      let(:errors) { NYUDL::MDI::Message::Base.new.errors }
+      it 'should be empty' do
+        expect(errors).to be_empty
+      end
+    end
   end
 end
