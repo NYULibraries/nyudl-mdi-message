@@ -6,10 +6,11 @@ module NYUDL::MDI::Message
   class Base
     include Validatable
 
-    def initialize(params = {})
+    def initialize(incoming = {})
       h[:version]    = MESSAGE_STRUCTURE_VERSION
       h[:request_id] = SecureRandom.uuid
-      h[:params]     = params
+      # settable values
+      [:params].each { |k| h[k] = incoming[k] }
     end
     def version
       h[:version]
