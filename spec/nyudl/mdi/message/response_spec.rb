@@ -83,6 +83,14 @@ module NYUDL::MDI::Message
           expect(response.end_time).to be == "#{time}"
         end
       end
+
+      context "when assigned a time earlier than the start_time" do
+        it "should not be valid" do
+          time = Time.new(2003).utc.iso8601
+          response.end_time = time
+          expect(response).to_not be_valid
+        end
+      end
     end
 
 
