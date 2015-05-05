@@ -132,46 +132,48 @@ module NYUDL::MDI::Message
     end
 
 
-    # describe "#agent" do
-    #   context "when not assigned a value" do
-    #     it "returns nil" do
-    #       expect(response.agent).to be_nil
-    #     end
-    #   end
+    describe "#agent" do
+      context "when not assigned a value" do
+        it "returns nil" do
+          response = build(agent: nil)
+          expect(response.agent).to be_nil
+        end
+      end
 
-    #   context "when assigned a valid agent" do
-    #     it "returns the assigned agent" do
-    #       agent = {name: 'sha256deep', version: '4.3', host: 'rsw1.dlib.nyu.edu'}
-    #       response.agent = agent
-    #       expect(response.agent).to be == agent
-    #     end
-    #   end
-    # end
+      context "when assigned a valid agent" do
+        it "returns the assigned agent" do
+          agent = {name: 'sha256deep', version: '4.3', host: 'rsw1.dlib.nyu.edu'}
+          response.agent = agent
+          expect(response.agent).to be == agent
+        end
+      end
+    end
 
 
-    # describe "#agent=" do
-    #   context "when assigned an invalid agent" do
-    #     context "and the agent is not a Hash" do
-    #       it "raises an ArgumentError" do
-    #         expect { response.agent = 21 }.to raise_error(ArgumentError)
-    #       end
-    #     end
+    describe "#agent=" do
+      context "when assigned an invalid agent" do
+        context "and the agent is not a Hash" do
+          it "should not be valid" do
+            response.agent = 21
+            expect(response).to_not be_valid
+          end
 
-    #     context "and the agent Hash does not have the expected keys" do
-    #       it "raises an ArgumentError" do
-    #         expect { response.agent = {foo: 'bar'} }.to raise_error(ArgumentError)
-    #       end
-    #     end
+          context "and the agent Hash does not have the expected keys" do
+            it "should not be valid" do
+              response.agent = {foo: 'bar'}
+              expect(response).to_not be_valid
+            end
+          end
 
-    #     context "and the agent Hash does not have values for every key" do
-    #       it "raises an ArgumentError" do
-    #         agent = {name: 'sha256deep', version: '  ', host: 'rsw1.dlib.nyu.edu'}
-    #         expect { response.agent = agent  }.to raise_error(ArgumentError)
-    #       end
-    #     end
-    #   end
-    # end
-
+          context "and the agent Hash does not have values for every key" do
+            it "should not be valid" do
+              response.agent = {name: 'sha256deep', version: '  ', host: 'rsw1.dlib.nyu.edu'}
+              expect(response).to_not be_valid
+            end
+          end
+        end
+      end
+    end
 
     # describe "#data" do
     #   context "when not assigned a value" do

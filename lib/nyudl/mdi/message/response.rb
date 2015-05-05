@@ -3,8 +3,9 @@ require 'timeliness'
 module NYUDL::MDI::Message
   class Response < Base
 
-    validates_true_for :time_values, :logic => Proc.new { times_valid? }
-    validates_true_for :outcome,     :logic => Proc.new { outcome_valid? }
+    validates_true_for :time_values, logic: Proc.new { times_valid?   }
+    validates_true_for :outcome,     logic: Proc.new { outcome_valid? }
+    validates_true_for :agent,       logic: Proc.new { agent_valid?   }
 
     def initialize(incoming)
       super
@@ -45,7 +46,6 @@ module NYUDL::MDI::Message
     end
 
     def agent=(value)
-      assert_valid_agent!(value)
       h[:agent] = value
     end
 
@@ -76,22 +76,31 @@ module NYUDL::MDI::Message
 
 
     def outcome_valid?
-      %w(success error).include?(outcome)
+      errors.add :outcome, "invalid outcome: #{outcome}" unless %w(success error).include?(outcome)
+
+      errors.on(:outcome).nil?
     end
 
 
-    def assert_valid_agent!(agent)
-      raise ArgumentError, "agent must be a Hash" unless agent.is_a?(Hash)
+    def agent_valid?
 
       required_keys = [ :name, :version , :host ]
-      unless agent.keys.sort == required_keys.sort
-        raise ArgumentError, "invalid keys: #{agent.keys}"
+
+      if agent.is_a?(Hash)
+        unless agent.keys.sort == required_keys.sort
+          errors.add :agent, "invalid keys: #{agent.keys}"
+        end
+
+        values = (agent.values.reject {|a| a.strip.empty? })
+        unless values.length == required_keys.length
+          errors.add :agent, "all keys must have values: #{agent}"
+        end
+      else
+        errors.add :agent, "agent must be a Hash" unless agent.is_a?(Hash)
       end
 
-      values = (agent.values.reject {|a| a.strip.empty? })
-      unless values.length == required_keys.length
-        raise ArgumentError, "all keys must have values: #{agent}"
-      end
+      errors.on(:agent).nil?
     end
+
   end
 end
