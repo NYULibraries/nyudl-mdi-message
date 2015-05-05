@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module NYUDL
   module MDI
-    module  Message
+    module Message
       describe Base do
         context 'when instantiated' do
           it 'should be the correct class' do
