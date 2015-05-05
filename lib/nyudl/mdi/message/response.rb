@@ -7,57 +7,27 @@ module NYUDL::MDI::Message
     validates_true_for :outcome,     logic: Proc.new { outcome_valid? }
     validates_true_for :agent,       logic: Proc.new { agent_valid?   }
 
-    def initialize(incoming)
-      super
-      [:outcome, :start_time, :end_time, :outcome, :agent, :data].each do |k|
-        h[k] = incoming[k]
+
+    # define getters/setters that access underlying hash
+    KEYS = :outcome, :start_time, :end_time, :outcome, :agent, :data
+    KEYS.each do |k|
+      # getter
+      define_method("#{k}") do
+        h[k]
+      end
+      # setter
+      define_method("#{k}=") do |argument|
+        h[k] = argument
       end
     end
 
-    def start_time
-      h[:start_time]
+
+    def initialize(incoming)
+      super
+      KEYS.each do |k|
+        h[k] = incoming[k]
+      end
     end
-
-    def start_time=(value)
-      h[:start_time] = value
-    end
-
-
-    def end_time
-      h[:end_time]
-    end
-
-    def end_time=(value)
-      h[:end_time] = value
-    end
-
-
-    def outcome
-      h[:outcome]
-    end
-
-    def outcome=(value)
-      h[:outcome] = value
-    end
-
-
-    def agent
-      h[:agent]
-    end
-
-    def agent=(value)
-      h[:agent] = value
-    end
-
-
-    def data
-      h[:data]
-    end
-
-    def data=(value)
-      h[:data] = value
-    end
-
 
 
     private
