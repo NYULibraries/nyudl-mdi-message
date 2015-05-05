@@ -3,12 +3,22 @@ require 'timeliness'
 module NYUDL::MDI::Message
   class Response < Base
 
+    validates_true_for :time_values, logic: Proc.new { times_valid?   }
+    validates_true_for :outcome,     logic: Proc.new { outcome_valid? }
+    validates_true_for :agent,       logic: Proc.new { agent_valid?   }
+
+    def initialize(incoming)
+      super
+      [:outcome, :start_time, :end_time, :outcome, :agent, :data].each do |k|
+        h[k] = incoming[k]
+      end
+    end
+
     def start_time
       h[:start_time]
     end
 
     def start_time=(value)
-      assert_iso8601_utc!(value)
       h[:start_time] = value
     end
 
@@ -18,7 +28,6 @@ module NYUDL::MDI::Message
     end
 
     def end_time=(value)
-      assert_iso8601_utc!(value)
       h[:end_time] = value
     end
 
@@ -28,7 +37,6 @@ module NYUDL::MDI::Message
     end
 
     def outcome=(value)
-      assert_valid_outcome!(value)
       h[:outcome] = value
     end
 
@@ -38,7 +46,6 @@ module NYUDL::MDI::Message
     end
 
     def agent=(value)
-      assert_valid_agent!(value)
       h[:agent] = value
     end
 
@@ -55,33 +62,43 @@ module NYUDL::MDI::Message
 
     private
 
-    def assert_iso8601_utc!(time)
-      unless Timeliness.parse(time, format: 'yyyy-mm-ddThh:nn:ssZ')
-        raise ArgumentError, "non-UTC ISO-8601 time detected: #{time}"
-      end
+    def times_valid?
+      errors.add :time_values, "non-UTC ISO-8601 time detected: #{start_time}" unless iso8601_utc?(start_time)
+      errors.add :time_values, "non-UTC ISO-8601 time detected: #{end_time}"   unless iso8601_utc?(end_time)
+      errors.add :time_values, "start_time must be <= end_time"                unless start_time <= end_time
+      errors.on(:time_values).nil?
     end
 
 
-    def assert_valid_outcome!(outcome)
-      valid_outcomes = %w(success error)
-      unless valid_outcomes.include?(outcome)
-        raise ArgumentError, "invalid outcome detected: #{outcome}"
-      end
+    def iso8601_utc?(time)
+      Timeliness.parse(time, format: 'yyyy-mm-ddThh:nn:ssZ')
     end
 
 
-    def assert_valid_agent!(agent)
-      raise ArgumentError, "agent must be a Hash" unless agent.is_a?(Hash)
+    def outcome_valid?
+      errors.add :outcome, "invalid outcome: #{outcome}" unless %w(success error).include?(outcome)
+      errors.on(:outcome).nil?
+    end
 
+
+    def agent_valid?
       required_keys = [ :name, :version , :host ]
-      unless agent.keys.sort == required_keys.sort
-        raise ArgumentError, "invalid keys: #{agent.keys}"
+
+      if agent.is_a?(Hash)
+        unless agent.keys.sort == required_keys.sort
+          errors.add :agent, "invalid keys: #{agent.keys}"
+        end
+
+        values = (agent.values.reject {|a| a.strip.empty? })
+        unless values.length == required_keys.length
+          errors.add :agent, "all keys must have values: #{agent}"
+        end
+      else
+        errors.add :agent, "agent must be a Hash" unless agent.is_a?(Hash)
       end
 
-      values = (agent.values.reject {|a| a.strip.empty? })
-      unless values.length == required_keys.length
-        raise ArgumentError, "all keys must have values: #{agent}"
-      end
+      errors.on(:agent).nil?
     end
+
   end
 end
