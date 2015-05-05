@@ -66,9 +66,9 @@ module NYUDL::MDI::Message
       errors.add :time_values, "non-UTC ISO-8601 time detected: #{start_time}" unless iso8601_utc?(start_time)
       errors.add :time_values, "non-UTC ISO-8601 time detected: #{end_time}"   unless iso8601_utc?(end_time)
       errors.add :time_values, "start_time must be <= end_time"                unless start_time <= end_time
-
       errors.on(:time_values).nil?
     end
+
 
     def iso8601_utc?(time)
       Timeliness.parse(time, format: 'yyyy-mm-ddThh:nn:ssZ')
@@ -77,13 +77,11 @@ module NYUDL::MDI::Message
 
     def outcome_valid?
       errors.add :outcome, "invalid outcome: #{outcome}" unless %w(success error).include?(outcome)
-
       errors.on(:outcome).nil?
     end
 
 
     def agent_valid?
-
       required_keys = [ :name, :version , :host ]
 
       if agent.is_a?(Hash)
