@@ -7,6 +7,7 @@ module NYUDL
       describe Response do
         def valid_attributes
           {
+            request_id: 'f2bed5f1-a756-4da7-af00-0d479e0da099',
             outcome:    'success',
             start_time: Time.now.utc.iso8601,
             end_time:   Time.now.utc.iso8601,
@@ -196,6 +197,22 @@ module NYUDL
               data = 'this is some awesome data!'
               response.data = data
               expect(response.data).to be == data
+            end
+          end
+        end
+
+        describe '#request_id' do
+          context 'when instantiated without a request_id value' do
+            it 'returns a unique request_id' do
+              response = build(request_id: nil)
+              expect(response.request_id).to_not be == valid_attributes[:request_id]
+            end
+          end
+
+          context 'when instantiated without a request_id value' do
+            it 'returns the assigned value' do
+              response = build()
+              expect(response.request_id).to be == valid_attributes[:request_id]
             end
           end
         end
