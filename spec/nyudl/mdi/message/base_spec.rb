@@ -32,6 +32,16 @@ module NYUDL
             regexp  = /\A#{pattern}\z/
             expect(request_id).to match(regexp)
           end
+          context 'when instantiated without a request_id value' do
+            it 'returns a unique request_id' do
+              expect(Base.new.request_id).to_not be == request_id
+            end
+          end
+          context 'when instantiated with a request_id value' do
+            it 'returns the assigned value' do
+              expect(Base.new(request_id: request_id).request_id).to be == request_id
+            end
+          end
         end
         describe '#params' do
           context 'when no params hash provided to constructor' do
