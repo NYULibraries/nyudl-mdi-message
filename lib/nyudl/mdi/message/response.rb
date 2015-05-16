@@ -11,7 +11,7 @@ module NYUDL
         validates_true_for :agent,       logic: proc { agent_valid?   }
 
         # define getters/setters that access underlying hash
-        KEYS = :outcome, :start_time, :end_time, :outcome, :agent, :data
+        KEYS = :start_time, :end_time, :outcome, :agent, :data
         KEYS.each do |k|
           # getter
           define_method("#{k}") do
