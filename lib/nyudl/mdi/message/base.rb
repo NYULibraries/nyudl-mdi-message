@@ -10,7 +10,7 @@ module NYUDL
         include Validatable
 
         def initialize(incoming = {})
-          h[:version]    = MESSAGE_STRUCTURE_VERSION
+          h[:version]    = incoming[:version]    || MESSAGE_STRUCTURE_VERSION
           h[:request_id] = incoming[:request_id] || SecureRandom.uuid
           h[:params]     = incoming[:params]
         end

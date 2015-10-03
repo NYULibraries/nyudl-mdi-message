@@ -24,6 +24,9 @@ module NYUDL
           it 'should return the correct version' do
             expect(version).to be == '0.1.0'
           end
+          it 'should preserve the version provided to the constructor' do
+            expect(Base.new(version: '0.0.0').version).to be == '0.0.0'
+          end
         end
         describe '#request_id' do
           let(:request_id) { Base.new.request_id }
