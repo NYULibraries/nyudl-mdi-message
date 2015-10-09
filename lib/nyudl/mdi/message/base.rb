@@ -27,6 +27,10 @@ module NYUDL
           h[:params]
         end
 
+        def params=(arg)
+          h[:params] = arg
+        end
+
         def to_json
           MultiJson.dump(h)
         end
