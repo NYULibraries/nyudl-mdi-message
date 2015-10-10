@@ -28,7 +28,7 @@ module NYUDL
         end
 
         def params=(arg)
-          h[:params] = arg
+          h[:params] = arg.to_h
         end
 
         def to_json

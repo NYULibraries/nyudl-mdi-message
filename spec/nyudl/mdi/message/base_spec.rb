@@ -62,7 +62,7 @@ module NYUDL
           end
         end
         describe '#params=' do
-          context 'when a value is assigned' do
+          context 'when a value is assigned that responds to #to_h' do
             test_params = { c: 'c', d: 'd' }
             b = Base.new()
             b.params = test_params
@@ -71,7 +71,6 @@ module NYUDL
               expect(assigned).to be == test_params
             end
           end
-#            it 'raises an ArgumentError if parameter does not respond to .to_h' do
         end
         describe '#valid?' do
           let(:result) { Base.new.valid? }
