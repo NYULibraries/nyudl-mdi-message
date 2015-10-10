@@ -61,6 +61,17 @@ module NYUDL
             end
           end
         end
+        describe '#params=' do
+          context 'when a value is assigned that responds to #to_h' do
+            test_params = { c: 'c', d: 'd' }
+            b = Base.new()
+            b.params = test_params
+            let(:assigned) { b.params }
+            it 'should return the assigned params hash' do
+              expect(assigned).to be == test_params
+            end
+          end
+        end
         describe '#valid?' do
           let(:result) { Base.new.valid? }
           it 'should be true' do
