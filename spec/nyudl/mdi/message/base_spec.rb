@@ -62,7 +62,7 @@ module NYUDL
           end
         end
         describe '#params=' do
-          context 'when a value is assigned that responds to #to_h' do
+          context 'when assigned a value' do
             test_params = { c: 'c', d: 'd' }
             b = Base.new()
             b.params = test_params
