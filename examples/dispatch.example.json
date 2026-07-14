@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "request_id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+  "job_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+  "task_id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+  "step_id": "push_to_rw",
+  "params": {
+    "source_abs_path": "/content/fales/mss123/aip",
+    "target_share": "fales",
+    "target_subdir": "mss123"
+  },
+  "reply_to": "go-rsbe.orchestrator.results"
+}

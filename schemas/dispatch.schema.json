@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/NYULibraries/nyudl-mdi-message/main/schemas/dispatch.schema.json",
+  "title": "MDI Dispatch",
+  "description": "The envelope the job orchestrator sends to a worker's queue to ask it to perform one task (one workflow step). This schema is the language-neutral source of truth for the MDI message contract; the canonical Go binding lives in github.com/nyudlts/go-mdi (package mdi).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "request_id",
+    "job_id",
+    "task_id",
+    "step_id",
+    "params",
+    "reply_to"
+  ],
+  "properties": {
+    "version": {
+      "description": "The envelope schema version (semver). The current contract version is 1.0.0.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "request_id": {
+      "description": "A deterministic idempotency key. The orchestrator sets it to the task id, so a broker redelivery or an orchestrator re-dispatch of the same task carries the same key.",
+      "$ref": "#/$defs/uuid"
+    },
+    "job_id": {
+      "description": "The id of the job this task belongs to.",
+      "$ref": "#/$defs/uuid"
+    },
+    "task_id": {
+      "description": "The id of the task to perform.",
+      "$ref": "#/$defs/uuid"
+    },
+    "step_id": {
+      "description": "The workflow step id this task realizes.",
+      "type": "string",
+      "minLength": 1
+    },
+    "params": {
+      "description": "Service-specific key/value pairs the worker needs to perform the task.",
+      "type": "object"
+    },
+    "reply_to": {
+      "description": "The address where the worker must publish its Result. The orchestrator owns routing, so the worker echoes results here without knowing the broker topology.",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    }
+  }
+}

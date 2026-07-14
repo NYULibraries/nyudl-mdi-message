@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/NYULibraries/nyudl-mdi-message/main/schemas/result.schema.json",
+  "title": "MDI Result",
+  "description": "The envelope a worker publishes (to the address named by the dispatch message's reply_to) to report the outcome of a task. This schema is the language-neutral source of truth for the MDI message contract; the canonical Go binding lives in github.com/nyudlts/go-mdi (package mdi).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "request_id",
+    "job_id",
+    "task_id",
+    "outcome",
+    "agent"
+  ],
+  "$comment": "A cross-field constraint that JSON Schema cannot express: when both start_time and end_time are present, start_time must be <= end_time. Validators and services must enforce this.",
+  "properties": {
+    "version": {
+      "description": "The envelope schema version (semver). The current contract version is 1.0.0.",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "request_id": {
+      "description": "Echo of the dispatch request_id (the task id) — the deterministic idempotency key.",
+      "$ref": "#/$defs/uuid"
+    },
+    "job_id": {
+      "description": "The id of the job this task belongs to.",
+      "$ref": "#/$defs/uuid"
+    },
+    "task_id": {
+      "description": "The id of the task that was performed.",
+      "$ref": "#/$defs/uuid"
+    },
+    "outcome": {
+      "description": "Whether the task succeeded or failed. Drives the orchestrator's on_success / on_failure workflow branch.",
+      "type": "string",
+      "enum": ["success", "failure"]
+    },
+    "data": {
+      "description": "Optional worker output, persisted by the orchestrator to the task.",
+      "type": "object"
+    },
+    "agent": {
+      "description": "Identifies the worker that produced this Result.",
+      "$ref": "#/$defs/agent"
+    },
+    "start_time": {
+      "description": "Optional operation start timestamp. When present, ISO-8601 UTC (RFC 3339 with a trailing \"Z\").",
+      "$ref": "#/$defs/iso8601_utc"
+    },
+    "end_time": {
+      "description": "Optional operation finish timestamp. When present, ISO-8601 UTC (RFC 3339 with a trailing \"Z\"), and >= start_time.",
+      "$ref": "#/$defs/iso8601_utc"
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "iso8601_utc": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "host"],
+      "properties": {
+        "name": {
+          "description": "The worker's name (e.g. \"push-rw-worker\").",
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "description": "The worker's version.",
+          "type": "string",
+          "minLength": 1
+        },
+        "host": {
+          "description": "The host the worker ran on.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

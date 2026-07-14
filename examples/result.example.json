@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "request_id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+  "job_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+  "task_id": "3f2504e0-4f89-41d3-9a0c-0305e82c3301",
+  "outcome": "success",
+  "data": {
+    "stdout": "pushed 42 files to fales/mss123\n",
+    "stderr": ""
+  },
+  "agent": {
+    "name": "push-rw-worker",
+    "version": "1.0.0",
+    "host": "worker-01.dlib.nyu.edu"
+  },
+  "start_time": "2026-07-14T12:34:56Z",
+  "end_time": "2026-07-14T12:35:10Z"
+}
