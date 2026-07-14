@@ -1,4 +1,4 @@
-Copyright (c) 2015 jgpawletko
+Copyright (c) 2015-2026 New York University
 
 MIT License
 
