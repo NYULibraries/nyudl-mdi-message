@@ -54,9 +54,9 @@ message's `version` field).
 | `task_id`    | yes      | UUID of the task that was performed                                |
 | `outcome`    | yes      | `success` or `failure` — drives the orchestrator's branch          |
 | `agent`      | yes      | object with keys `name`, `version`, `host` (all non-empty)         |
-| `data`       | no       | optional worker output, persisted by the orchestrator             |
-| `start_time` | no       | operation start timestamp, ISO-8601 UTC (RFC 3339, trailing `Z`)  |
-| `end_time`   | no       | operation finish timestamp, ISO-8601 UTC (RFC 3339, trailing `Z`) |
+| `data`       | no       | optional worker output, persisted by the orchestrator              |
+| `start_time` | no       | operation start timestamp, ISO-8601 UTC (RFC 3339, trailing `Z`)   |
+| `end_time`   | no       | operation finish timestamp, ISO-8601 UTC (RFC 3339, trailing `Z`)  |
 
 ### `outcome`
 
